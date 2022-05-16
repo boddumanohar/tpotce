@@ -354,10 +354,12 @@ fuCHECKPACKAGES "$myPREINSTALLPACKAGES"
 #####################################
 
 function checkLicence() {
-    license_file="license.sha256"
+    SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+    license_file="$SCRIPT_DIR/license.sha256"
     # the hash from license.sha256 and compare it with whats provided in license_key
     if [[ ! -f $license_file ]]; then
         echo "license key not found abouting installation"
+        exit 0
     fi
 
     orig_key=$(cat $license_file | awk '{print $1}')
