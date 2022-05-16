@@ -353,6 +353,32 @@ fuCHECKPACKAGES "$myPREINSTALLPACKAGES"
 # IV. Prepare installer environment #
 #####################################
 
+function checkLicence() {
+    license_file="license.sha256"
+    # the hash from license.sha256 and compare it with whats provided in license_key
+    if [[ ! -f $license_file ]]; then
+        echo "license key not found abouting installation"
+    fi
+
+    orig_key=$(cat $license_file | awk '{print $1}')
+    echo "Enter the license key"
+    while :
+    do
+        read license_key
+        user_key=$(echo $license_key | sha256sum | awk '{print $1}')
+
+        if [[ $orig_key == $user_key ]]; then
+            echo "valid licence key. Contining with T-POT installation..."
+            break
+        fi
+        echo "incorrect key provided. Please enter the proper key"
+
+    done
+}
+
+# check for valid license
+checkLicence
+
 # Check for Debian release and extract command line arguments
 myLSB=$(lsb_release -c | awk '{ print $2 }')
 myVERSIONS="$myLSB_STABLE_SUPPORTED $myLSB_TESTING_SUPPORTED"

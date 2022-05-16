@@ -190,6 +190,16 @@ EOF
   fi
 done
 
+
+# Let's generate license key
+function generateLicense() {
+  license_file="iso/installer/license.sha256"
+  license_key=$(echo $RANDOM | md5sum | head -c 20; echo;)
+  echo "$license_key"
+  echo $license_key | sha256sum > $license_file
+}
+license=$(generateLicense)
+
 # Let's write the config file
 if [ "$myCONF_PROXY_USE" == "0" ] || [ "$myCONF_PFX_USE" == "0" ] || [ "$myCONF_NTP_USE" == "0" ];
   then
@@ -306,5 +316,13 @@ do
 done
 
 dialog --clear
+
+echo "========================================================================="
+echo "================ Generated ISO with key ================================="
+echo ""
+echo "                 $license"
+echo ""
+echo "===== Please note the key. you should enter this during installation ===="
+echo "========================================================================="
 
 exit 0
