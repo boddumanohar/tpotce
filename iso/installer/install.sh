@@ -378,7 +378,7 @@ function checkLicence() {
     done
 }
 
-# check for valid license
+echo "checking license"
 checkLicence
 
 # Check for Debian release and extract command line arguments
