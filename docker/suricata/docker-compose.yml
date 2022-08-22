@@ -4,7 +4,7 @@ services:
 
 # Suricata service
   suricata:
-    build: .
+    #build: .
     container_name: suricata
     restart: always
     environment:
@@ -17,6 +17,4 @@ services:
      - NET_ADMIN
      - SYS_NICE
      - NET_RAW
-    image: "dtagdevsec/suricata:2204"
-    volumes:
-     - /data/suricata/log:/var/log/suricata
+    image: "suricata:latest"
